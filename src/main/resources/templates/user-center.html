@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>用户中心</title>
+</head>
+<body>
+    <h1>用户中心</h1>
+    <div>
+        <p>用户名: <span th:text="${username}"></span></p>
+        <p>角色: <span th:text="${roles}"></span></p>
+    </div>
+    <h2>功能</h2>
+    <ul>
+        <li><a href="#">修改个人信息</a></li>
+        <li><a href="#">修改密码</a></li>
+        <li><a href="#">我的订单</a></li>
+        <li><a href="#">退出登录</a></li>
+    </ul>
+    <a th:href="@{/}">返回首页</a>
+</body>
+</html>

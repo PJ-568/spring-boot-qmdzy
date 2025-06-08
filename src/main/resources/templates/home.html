@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>主页</title>
+</head>
+<body>
+    <h1>欢迎来到线上商城</h1>
+    <div th:if="${username} != 'anonymousUser'">
+        <p>用户名：<span th:text="${username}"></span></p>
+        <p>用户类型：<span th:text="${roles}"></span></p>
+        <form th:action="@{/logout}" method="post">
+            <input type="submit" value="登出"/>
+        </form>
+    </div>
+    <div th:unless="${username} != 'anonymousUser'">
+        <a th:href="@{/login-page}">登录</a> |
+        <a th:href="@{/register}">注册</a>
+    </div>
+    <nav>
+        <a th:href="@{/}">主页</a> |
+        <a th:href="@{/admin}">管理页</a> |
+        <a th:href="@{/user-center}">用户信息</a> |
+        <a th:href="@{/h2-console}" target="_blank">数据库管理</a>
+    </nav>
+</body>
+</html>
