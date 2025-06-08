@@ -16,14 +16,14 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/", "/home", "/register", "/login-page", "/h2-console/**").permitAll()
+                .requestMatchers("/", "/home", "/register", "/login-page", "/h2-console/**", "/fragments/**", "/css/**", "/img/**").permitAll()
                 .requestMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form
                 .loginPage("/login-page")
                 .loginProcessingUrl("/login")
-                .defaultSuccessUrl("/")
+                .defaultSuccessUrl("/home", true)  // 添加alwaysUse=true
                 .failureUrl("/login-page?error")
                 .permitAll()
             )

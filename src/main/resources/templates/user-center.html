@@ -1,22 +1,49 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>用户中心</title>
+<head th:replace="fragments/head :: head">
+  <title>用户中心 - QMDZY商城</title>
 </head>
 <body>
-    <h1>用户中心</h1>
-    <div>
-        <p>用户名: <span th:text="${username}"></span></p>
-        <p>角色: <span th:text="${roles}"></span></p>
+  <!-- 导航栏 -->
+  <div th:replace="fragments/navbar :: navbar('user')"></div>
+  
+  <!-- 背景动画 -->
+  <div th:replace="fragments/bg :: bg"></div>
+  
+  <!-- 主内容区域 -->
+  <div class="container max-width">
+    <div class="content">
+      <!-- 错误信息提示 -->
+      <div th:if="${errorMessage}" class="error-message" th:text="${errorMessage}"></div>
+      
+      <h2>您好，<span th:text="${#authentication.principal.nickname}">用户</span>。</h2>
+      
+      <table>
+        <tr>
+          <th>用户 ID</th>
+          <th>用户名</th>
+          <th>昵称</th>
+          <th>角色</th>
+        </tr>
+        <tr>
+          <td th:text="${#authentication.principal.id}"></td>
+          <td th:text="${#authentication.principal.username}"></td>
+          <td th:text="${#authentication.principal.nickname}"></td>
+          <td>
+            <span th:if="${#authorization.expression('hasRole(''ADMIN'')')}">管理员</span>
+            <span th:unless="${#authorization.expression('hasRole(''ADMIN'')')}">用户</span>
+          </td>
+        </tr>
+      </table>
+      
+      <!-- 登出按钮 -->
+      <form th:action="@{/logout}" method="post">
+        <button type="submit" class="btn btn-primary">登出</button>
+      </form>
     </div>
-    <h2>功能</h2>
-    <ul>
-        <li><a href="#">修改个人信息</a></li>
-        <li><a href="#">修改密码</a></li>
-        <li><a href="#">我的订单</a></li>
-        <li><a href="#">退出登录</a></li>
-    </ul>
-    <a th:href="@{/}">返回首页</a>
+  </div>
+  
+  <!-- 页脚 -->
+  <div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>

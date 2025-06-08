@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title th:text="${title} ?: 'QMDZY商城'">QMDZY商城</title>
+  
+  <!-- 全局样式 -->
+  <link rel="stylesheet" th:href="@{/css/main.css}">
+  
+  <!-- 网站图标 -->
+  <link rel="icon" type="image/svg+xml" th:href="@{/img/PJ568.jpg}">
+  
+  <!-- Font Awesome图标库 -->
+  <link rel="stylesheet" href="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-y/font-awesome/6.0.0/css/all.min.css">
+  
+  <!-- 翻译库 -->
+  <script src="//lib.baomitu.com/translate.js/3.7.2/translate.js"></script>
+  
+  <!-- 主JS文件 -->
+  <script th:src="@{/js/main.js}"></script>
+</head>
+</html>

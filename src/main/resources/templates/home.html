@@ -1,27 +1,32 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>主页</title>
+<head th:replace="fragments/head :: head">
+  <title>QMDZY商城首页</title>
 </head>
 <body>
-    <h1>欢迎来到线上商城</h1>
-    <div th:if="${username} != 'anonymousUser'">
-        <p>用户名：<span th:text="${username}"></span></p>
-        <p>用户类型：<span th:text="${roles}"></span></p>
-        <form th:action="@{/logout}" method="post">
-            <input type="submit" value="登出"/>
-        </form>
+  <!-- 导航栏 -->
+  <div th:replace="fragments/navbar :: navbar('index')"></div>
+  
+  <!-- 背景动画 -->
+  <div th:replace="fragments/bg :: bg"></div>
+  
+  <!-- 主内容区域 -->
+  <div class="main-content">
+    <h1>欢迎来到QMDZY商城</h1>
+    <div th:if="${#authentication.isAuthenticated()}">
+      <p>欢迎回来，[[${#authentication.principal.username}]]！</p>
     </div>
-    <div th:unless="${username} != 'anonymousUser'">
-        <a th:href="@{/login-page}">登录</a> |
-        <a th:href="@{/register}">注册</a>
+    <div th:unless="${#authentication.isAuthenticated()}">
+      <p>请<a th:href="@{/login-page}">登录</a>或<a th:href="@{/register}">注册</a>开始购物</p>
     </div>
-    <nav>
-        <a th:href="@{/}">主页</a> |
-        <a th:href="@{/admin}">管理页</a> |
-        <a th:href="@{/user-center}">用户信息</a> |
-        <a th:href="@{/h2-console}" target="_blank">数据库管理</a>
-    </nav>
+    
+    <!-- 商品列表区域（后续实现） -->
+    <div class="product-list">
+      <!-- 商品卡片将在这里动态生成 -->
+    </div>
+  </div>
+  
+  <!-- 页脚 -->
+  <div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>

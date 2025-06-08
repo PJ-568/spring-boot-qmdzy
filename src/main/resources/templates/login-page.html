@@ -1,28 +1,42 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>用户登录</title>
+<head th:replace="fragments/head :: head">
+  <title>登录 - QMDZY商城</title>
 </head>
 <body>
-    <h1>用户登录</h1>
-    <div th:if="${param.error}" style="color: red;">
+  <!-- 导航栏 -->
+  <div th:replace="fragments/navbar :: navbar('user')"></div>
+  
+  <!-- 背景动画 -->
+  <div th:replace="fragments/bg :: bg"></div>
+  
+  <!-- 登录表单 -->
+  <div class="container max-width">
+    <div class="content">
+      <h2>用户登录</h2>
+      
+      <!-- 错误信息提示 -->
+      <div th:if="${param.error}" class="error-message">
         用户名或密码错误
-    </div>
-    <div th:if="${param.registered}" style="color: green;">
-        注册成功，请登录
-    </div>
-    <form th:action="@{/login}" method="post">
-        <div>
-            <label>用户名:</label>
-            <input type="text" name="username" required>
+      </div>
+      
+      <form th:action="@{/login}" method="post">
+        <div class="form-group">
+          <label for="username">用户名:</label>
+          <input type="text" id="username" name="username" required>
         </div>
-        <div>
-            <label>密码:</label>
-            <input type="password" name="password" required>
+        <div class="form-group">
+          <label for="password">密码:</label>
+          <input type="password" id="password" name="password" required>
         </div>
-        <button type="submit">登录</button>
-    </form>
-    <a th:href="@{/register}">没有账号？立即注册</a>
+        <button type="submit" class="btn btn-primary">登录</button>
+      </form>
+      
+      <p>还没有账号？<a th:href="@{/register}">立即注册</a></p>
+    </div>
+  </div>
+  
+  <!-- 页脚 -->
+  <div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>
