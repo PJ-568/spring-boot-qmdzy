@@ -175,7 +175,12 @@ nav .ul a .current {
   border-radius: .1rem;
 }
 
+.container details>* {
+  margin: 1rem;
+}
+
 .container summary {
+  margin: 0;
   font-size: small;
   cursor: pointer;
   background-color: rgba(255, 255, 255, 0.1);
@@ -306,11 +311,13 @@ button[type="submit"]:hover {
   background-color: #3696A3;
 }
 
-button[type="submit"] .warring {
+button[type="submit"].warring,
+button.btn-danger {
   background-color: red;
 }
 
-button[type="submit"]:hover .warring {
+button[type="submit"]:hover.warring,
+button:hover.btn-danger {
   background-color: darkred;
 }
 
@@ -557,4 +564,29 @@ button[type="submit"]:hover .warring {
   .narrow-hide {
     display: none
   }
+}
+
+/* 对话框样式 */
+.dialog {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.5);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  max-width: 400px;
+}
+
+.dialog::backdrop {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.dialog-content {
+  text-align: center;
+}
+
+.dialog-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
 }

@@ -1,23 +1,25 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security6">
+
 <head th:replace="fragments/head :: head('用户中心 - 期末大作业商城')">
 </head>
+
 <body>
   <!-- 导航栏 -->
   <div th:replace="fragments/navbar :: navbar('user')"></div>
-  
+
   <!-- 背景动画 -->
   <div th:replace="fragments/bg :: bg"></div>
-  
+
   <!-- 主内容区域 -->
   <div class="container max-width">
     <div class="content">
       <!-- 消息提示 -->
       <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
       <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
-      
+
       <h2>您好，<span th:text="${#authentication.principal.nickname}">用户</span>。</h2>
-      
+
       <table>
         <tr>
           <th>用户 ID</th>
@@ -35,55 +37,125 @@
           </td>
         </tr>
       </table>
-      
+
       <!-- 更新昵称表单 -->
-      <div class="form-section">
-        <h3>更新昵称</h3>
-        <form th:action="@{/update-profile}" method="post">
-          <div class="form-group">
-            <label for="nickname">新昵称</label>
-            <input type="text" id="nickname" name="nickname" class="form-control" th:value="${#authentication.principal.nickname}" required>
-          </div>
-          <button type="submit" class="btn btn-primary">更新昵称</button>
-        </form>
-      </div>
-      
+      <details>
+        <summary>更新昵称</summary>
+        <div class="form-section">
+          <form th:action="@{/update-profile}" method="post">
+            <div class="form-group">
+              <label for="nickname">新昵称</label>
+              <input type="text" id="nickname" name="nickname" class="form-control"
+                th:value="${#authentication.principal.nickname}" required>
+            </div>
+            <button type="submit" class="btn btn-primary">更新昵称</button>
+          </form>
+        </div>
+      </details>
+
       <!-- 修改密码表单 -->
-      <div class="form-section">
-        <h3>修改密码</h3>
-        <form th:action="@{/change-password}" method="post" id="passwordForm">
-          <div class="form-group">
-            <label for="currentPassword">当前密码</label>
-            <input type="password" id="currentPassword" name="currentPassword" class="form-control" required>
+      <details>
+        <summary>修改密码</summary>
+        <div class="form-section">
+          <form th:action="@{/change-password}" method="post" id="passwordForm">
+            <div class="form-group">
+              <label for="currentPassword">当前密码</label>
+              <input type="password" id="currentPassword" name="currentPassword" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label for="newPassword">新密码</label>
+              <input type="password" id="newPassword" name="newPassword" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label for="confirmPassword">确认新密码</label>
+              <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary">修改密码</button>
+          </form>
+        </div>
+      </details>
+
+      <!-- 删除账户表单 -->
+      <form th:action="@{/delete-account}" method="post">
+        <details>
+          <summary>删除账户</summary>
+          <div class="form-section">
+            <p class="text-danger">警告：此操作将永久删除您的账户，不可恢复！</p>
+            <form id="deleteAccountForm">
+              <div class="form-group">
+                <label for="deletePassword">确认密码</label>
+                <input type="password" id="deletePassword" name="password" class="form-control" required>
+              </div>
+              <button id="confirmDelete" type="submit" class="btn btn-danger warring">删除账户</button>
+            </form>
           </div>
-          <div class="form-group">
-            <label for="newPassword">新密码</label>
-            <input type="password" id="newPassword" name="newPassword" class="form-control" required>
+        </details>
+
+        <!-- 删除账户确认对话框 -->
+        <dialog id="deleteDialog" class="dialog">
+          <div class="dialog-content">
+            <h3>确认删除账户</h3>
+            <p>确定要永久删除您的账户吗？此操作不可恢复！</p>
+            <div class="dialog-buttons">
+              <button type="submit" class="btn btn-danger">确认删除</button>
+              <button id="cancelDelete" class="btn btn-secondary">取消</button>
+            </div>
           </div>
-          <div class="form-group">
-            <label for="confirmPassword">确认新密码</label>
-            <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" required>
-          </div>
-          <button type="submit" class="btn btn-primary">修改密码</button>
-        </form>
-      </div>
-      
+        </dialog>
+      </form>
+
+      <script>
+        // 打开对话框按钮事件
+        const openDeleteDialogBtn = document.getElementById('openDeleteDialog');
+        if (openDeleteDialogBtn) {
+          openDeleteDialogBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const deleteDialog = document.getElementById('deleteDialog');
+            if (deleteDialog) {
+              deleteDialog.showModal();
+            }
+          });
+        }
+
+        // 确认删除按钮事件
+        const confirmDeleteBtn = document.getElementById('confirmDelete');
+        if (confirmDeleteBtn) {
+          confirmDeleteBtn.addEventListener('click', function(e) {
+            const deleteForm = document.getElementById('deleteAccountForm');
+            if (deleteForm) {
+              deleteForm.submit();
+            }
+          });
+        }
+
+        // 取消按钮事件
+        const cancelDeleteBtn = document.getElementById('cancelDelete');
+        if (cancelDeleteBtn) {
+          cancelDeleteBtn.addEventListener('click', function(e) {
+            const deleteDialog = document.getElementById('deleteDialog');
+            if (deleteDialog) {
+              deleteDialog.close();
+            }
+          });
+        }
+      </script>
+
       <!-- 登出按钮 -->
       <form th:action="@{/logout}" method="post">
         <button type="submit" class="btn btn-primary">登出</button>
       </form>
     </div>
   </div>
-  
+
   <!-- 页脚 -->
   <div th:replace="fragments/footer :: footer"></div>
-  
+
   <!-- 前端验证脚本 -->
   <script>
-    document.getElementById('passwordForm').addEventListener('submit', function(e) {
+    document.getElementById('passwordForm').addEventListener('submit', function (e) {
       const newPassword = document.getElementById('newPassword').value;
       const confirmPassword = document.getElementById('confirmPassword').value;
-      
+
       if (newPassword !== confirmPassword) {
         alert('新密码和确认密码不一致');
         e.preventDefault();
@@ -91,4 +163,5 @@
     });
   </script>
 </body>
+
 </html>
