@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security6">
 
-<head th:replace="~{fragments/head :: head('期末大作业商城首页')}">
-</head>
+<head th:replace="~{fragments/head :: head('期末大作业商城首页')}"></head>
 
 <body>
   <!-- 导航栏 -->
@@ -26,9 +25,8 @@
       <details class="mt-4">
         <summary>
           <span th:if="${currentCate != 0}">
-            <span th:each="category : ${categories}" 
-                  th:if="${category.id == currentCate}" 
-                  th:text="${category.name}"></span>
+            <span th:each="category : ${categories}" th:if="${category.id == currentCate}"
+              th:text="${category.name}"></span>
           </span>
           <span th:if="${currentCate == 0}">全类商品</span>
         </summary>
@@ -44,24 +42,28 @@
       <div class="pagination mt-3">
         <a th:if="${currentPage > 1}" th:href="@{/(page=${currentPage - 1},cate=${currentCate})}">上一页</a>
         <a th:unless="${currentPage > 1}" href="#" style="opacity: 0.5; cursor: not-allowed;">上一页</a>
-        
+
         <a th:href="@{/(page=1,cate=${currentCate})}">第 [[${currentPage}]] 页</a>
-        
+
         <a th:if="${currentPage < totalPages}" th:href="@{/(page=${currentPage + 1},cate=${currentCate})}">下一页</a>
         <a th:unless="${currentPage < totalPages}" href="#" style="opacity: 0.5; cursor: not-allowed;">下一页</a>
       </div>
 
       <!-- 商品网格 -->
-      <div th:if="${not #lists.isEmpty(products)}" class="row mt-3" style="width: 100%; display: flex; flex-wrap: wrap;">
-        <div th:each="product : ${products}" class="col-md-4" style="min-width: 128px; width: 33%; margin-bottom: 20px;">
-          <a th:href="@{/products/{id}(id=${product.id})}" style="text-decoration: none; color: inherit; display: block;">
-            <div class="on-load" style="height: 128px; background-color: rgba(255, 255, 255, 0.2); margin-bottom: 10px;"></div>
+      <div th:if="${not #lists.isEmpty(products)}" class="row mt-3"
+        style="width: 100%; display: flex; flex-wrap: wrap;">
+        <div th:each="product : ${products}" class="col-md-4"
+          style="min-width: 128px; width: 33%; margin-bottom: 20px;">
+          <a th:href="@{/products/{id}(id=${product.id})}"
+            style="text-decoration: none; color: inherit; display: block;">
+            <div class="on-load"
+              style="height: 128px; background-color: rgba(255, 255, 255, 0.2); margin-bottom: 10px;"></div>
             <h4>[[${product.name}]]&nbsp;&nbsp;￥[[${#numbers.formatDecimal(product.price, 1, 2)}]]</h4>
             <p>[[${product.description}]]</p>
           </a>
         </div>
       </div>
-      
+
       <div th:if="${#lists.isEmpty(products)}" class="mt-4">
         <p>没有找到商品。</p>
       </div>
@@ -70,9 +72,9 @@
       <div class="pagination mt-3">
         <a th:if="${currentPage > 1}" th:href="@{/(page=${currentPage - 1},cate=${currentCate})}">上一页</a>
         <a th:unless="${currentPage > 1}" href="#" style="opacity: 0.5; cursor: not-allowed;">上一页</a>
-        
+
         <a th:href="@{/(page=1,cate=${currentCate})}">第 [[${currentPage}]] 页</a>
-        
+
         <a th:if="${currentPage < totalPages}" th:href="@{/(page=${currentPage + 1},cate=${currentCate})}">下一页</a>
         <a th:unless="${currentPage < totalPages}" href="#" style="opacity: 0.5; cursor: not-allowed;">下一页</a>
       </div>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security6">
+
+<head th:replace="~{fragments/head :: head(title='购物车')}"></head>
+
+<body>
+  <!-- 导航栏 -->
+  <div th:replace="~{fragments/navbar :: navbar('cart')}"></div>
+
+  <!-- 背景动画 -->
+  <div th:replace="~{fragments/bg :: bg}"></div>
+
+  <div class="container max-width">
+
+    <div class="content">
+      <h1>我的购物车</h1>
+
+      <div th:if="${#lists.isEmpty(cartItems)}">
+        <div class="alert alert-info">购物车是空的，快去选购商品吧！</div>
+        <br>
+        <a href="/" class="btn btn-primary">浏览商品</a>
+      </div>
+
+      <div th:unless="${#lists.isEmpty(cartItems)}">
+        <table class="table table-striped" style="width: 100%;">
+          <thead>
+            <tr>
+              <th>商品名称</th>
+              <th>单价</th>
+              <th>数量</th>
+              <th>小计</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="item : ${cartItems}">
+              <td th:text="${item.product.name}"></td>
+              <td th:text="${#numbers.formatCurrency(item.product.price)}"></td>
+              <td>
+                <form th:action="@{/cart/update}" method="post" class="quantity-form">
+                  <input type="hidden" name="productId" th:value="${item.product.id}" />
+                  <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                  <button type="button" class="btn btn-outline-secondary minus-btn">-</button>
+                  <input readonly="readonly" type="number" name="quantity"
+                    th:value="${item.quantity > item.product.stock ? item.product.stock : item.quantity}" min="1"
+                    th:max="${item.product.stock}" class="form-control text-center quantity-input">
+                  <button type="button" class="btn btn-outline-secondary plus-btn">+</button>
+                </form>
+              </td>
+              <td th:text="${#numbers.formatCurrency(item.getTotalPrice())}"></td>
+              <td>
+                <form th:action="@{/cart/remove}" method="post">
+                  <input type="hidden" name="productId" th:value="${item.product.id}" />
+                  <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> 删除</button>
+                </form>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="text-right">
+          <h4>总计：<span
+              th:text="${#numbers.formatCurrency(#aggregates.sum(cartItems.![product.price * quantity]))}"></span>
+            <form th:action="@{/cart/clear}" method="post">
+              <button type="submit" class="btn btn-danger">
+                <i class="fas fa-trash"></i> 清空
+              </button>
+            </form>
+          </h4>
+          <a href="/checkout" class="btn btn-success ml-2">
+            <i class="fas fa-shopping-cart"></i> 结算
+          </a>
+        </div>
+      </div>
+
+      <script th:inline="javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+          // 处理加减按钮点击
+          document.querySelectorAll('.minus-btn, .plus-btn').forEach(btn => {
+            btn.addEventListener('click', function () {
+              const form = this.closest('.quantity-form');
+              const input = form.querySelector('.quantity-input');
+              let value = parseInt(input.value);
+              const max = parseInt(input.max);
+              const min = parseInt(input.min);
+
+              if (this.classList.contains('minus-btn')) {
+                value = Math.max(min, value - 1);
+              } else {
+                value = Math.min(max, value + 1);
+              }
+
+              input.value = value;
+              form.submit();
+            });
+          });
+
+          // 初始化时修正数量
+          document.querySelectorAll('.quantity-input').forEach(input => {
+            const value = parseInt(input.value);
+            const max = parseInt(input.max);
+            if (value > max) {
+              input.value = max;
+              input.closest('form').submit();
+            }
+          });
+        });
+      </script>
+    </div>
+  </div>
+
+  <div th:replace="fragments/footer :: footer"></div>
+</body>
+
+</html>
