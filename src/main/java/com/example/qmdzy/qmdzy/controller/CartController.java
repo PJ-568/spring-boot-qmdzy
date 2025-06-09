@@ -61,8 +61,7 @@ public class CartController {
     }
 
     private Long getCurrentUserId(Authentication authentication) {
-        // 实现获取当前用户ID的逻辑
-        // 这里假设UserDetails中有getId()方法
+        // 从认证信息中获取当前用户ID
         return ((com.example.qmdzy.qmdzy.model.User) authentication.getPrincipal()).getId();
     }
 }

@@ -67,4 +67,15 @@ public class CartServiceImpl implements CartService {
     public void clearCart(Long userId) {
         cartRepository.deleteByUserId(userId);
     }
+
+    @Override
+    public CartItem getCartItemById(Long id) {
+        return cartRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("购物车项不存在"));
+    }
+
+    @Override
+    public void removeFromCart(Long cartItemId) {
+        cartRepository.deleteById(cartItemId);
+    }
 }
