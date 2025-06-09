@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security6">
 
 <head>
   <meta charset="UTF-8">
@@ -40,7 +40,7 @@
         </a>
         <!-- 管理员菜单 -->
         <a sec:authorize="hasRole('ROLE_ADMIN')" th:title="管理" th:href="${loc == 'manage'} ? '#' : @{/admin}">
-          <i class="fa fa-lock"></i>
+          <i class="fa fa-gear"></i>
           <div class="narrow-hide">管理</div>
         </a>
         <!-- 语言切换 -->
@@ -54,7 +54,7 @@
           <i class="fa fa-user"></i>
           <div class="narrow-hide">
             <span sec:authentication="name"></span>
-            <i sec:authorize="!isAuthenticated()">游客</i>
+            <span sec:authorize="!isAuthenticated()">游客</span>
           </div>
         </a>
       </div>

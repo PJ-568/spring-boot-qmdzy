@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security6">
 
-<head th:replace="fragments/head :: head('QMDZY商城首页')">
+<head th:replace="fragments/head :: head('期末大作业商城首页')">
 </head>
 
 <body>
@@ -14,7 +14,7 @@
   <!-- 主内容区域 -->
   <div class="container max-width">
     <div class="content">
-      <h1>欢迎来到QMDZY商城</h1>
+      <h1>欢迎来到期末大作业商城</h1>
       <div sec:authorize="isAuthenticated()">
         <p>欢迎回来，<span sec:authentication="name"></span>！</p>
       </div>

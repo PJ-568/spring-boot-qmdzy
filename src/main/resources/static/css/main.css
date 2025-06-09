@@ -222,7 +222,7 @@ nav .ul a .current {
   border-right-color: transparent;
 }
 
-container table thead tr:first-child>* {
+.container table thead tr:first-child>* {
   border-top: .1rem solid transparent;
 }
 
