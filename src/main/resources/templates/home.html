@@ -16,7 +16,7 @@
     <div class="content">
       <h1>欢迎来到期末大作业商城</h1>
       <div sec:authorize="isAuthenticated()">
-        <p>欢迎回来，<span sec:authentication="name"></span>！</p>
+        <p>欢迎回来，<span sec:authentication="principal.nickname"></span>！</p>
       </div>
       <div sec:authorize="!isAuthenticated()">
         <p>请<a th:href="@{/login-page}">登录</a>或<a th:href="@{/register}">注册</a>开始购物</p>

@@ -53,7 +53,7 @@
         <a th:title="用户信息" th:href="${loc == 'user'} ? '#' : @{/user-center}">
           <i class="fa fa-user"></i>
           <div class="narrow-hide">
-            <span sec:authentication="name"></span>
+            <span sec:authorize="isAuthenticated()" sec:authentication="principal.nickname"></span>
             <span sec:authorize="!isAuthenticated()">游客</span>
           </div>
         </a>

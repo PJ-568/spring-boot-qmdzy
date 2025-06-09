@@ -212,8 +212,7 @@ nav .ul a .current {
   border-right: .1rem solid rgba(255, 255, 255, 0.3);
 }
 
-.container table td,
-.container table th {
+.container table td {
   border-top: .1rem solid rgba(255, 255, 255, 0.3);
 }
 

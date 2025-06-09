@@ -24,7 +24,23 @@ public class DataInitializer implements CommandLineRunner {
             User admin = new User();
             admin.setUsername("202235010623");
             admin.setPassword(passwordEncoder.encode("202235010623"));
-            admin.setNickname("系统管理员");
+            admin.setNickname("PJ568");
+            admin.setRole(1); // 1 表示管理员
+            userRepository.save(admin);
+        }
+        if (!userRepository.existsByUsername("202235010611")) {
+            User admin = new User();
+            admin.setUsername("202235010611");
+            admin.setPassword(passwordEncoder.encode("202235010611"));
+            admin.setNickname("风衣");
+            admin.setRole(1); // 1 表示管理员
+            userRepository.save(admin);
+        }
+        if (!userRepository.existsByUsername("202235010649")) {
+            User admin = new User();
+            admin.setUsername("202235010649");
+            admin.setPassword(passwordEncoder.encode("202235010649"));
+            admin.setNickname("烨灼");
             admin.setRole(1); // 1 表示管理员
             userRepository.save(admin);
         }
