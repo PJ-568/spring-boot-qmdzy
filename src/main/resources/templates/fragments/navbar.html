@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <head>
   <meta charset="UTF-8">
 </head>
+
 <body>
   <nav th:fragment="navbar(loc)">
     <div class="nav-content max-width">
@@ -10,49 +12,43 @@
       <a class="logo" th:href="@{/}">
         <img alt="PJ568 图标" title="PJ568 图标" th:src="@{/img/PJ568-Icon.png}" />
       </a>
-      
+
       <div class="ul">
         <!-- 返回按钮 -->
         <a title="返回" onclick="window.history.back(); return false;">
           <i class="fa fa-rotate-left"></i>
           <div class="narrow-hide">返回</div>
         </a>
-        
+
         <!-- 主页按钮 -->
         <a th:title="主页" th:href="${loc == 'index'} ? '#' : @{/}">
           <i class="fa fa-home"></i>
           <div class="narrow-hide">主页</div>
         </a>
-        
+
         <!-- 登录用户菜单 -->
-        <div sec:authorize="isAuthenticated()">
-          <!-- 购物车 -->
-          <a th:title="购物车" th:href="${loc == 'cart'} ? '#' : @{/cart}">
-            <i class="fa fa-cart-shopping"></i>
-            <div class="narrow-hide">购物车</div>
-          </a>
-          
-          <!-- 订单 -->
-          <a th:title="订单" th:href="${loc == 'order'} ? '#' : @{/order}">
-            <i class="fa fa-list"></i>
-            <div class="narrow-hide">订单</div>
-          </a>
-          
-          <!-- 管理员菜单 -->
-          <a sec:authorize="hasRole('ADMIN')"
-             th:title="管理"
-             th:href="${loc == 'manage'} ? '#' : @{/admin}">
-            <i class="fa fa-lock"></i>
-            <div class="narrow-hide">管理</div>
-          </a>
-        </div>
-        
+        <!-- 购物车 -->
+        <a sec:authorize="isAuthenticated()" th:title="购物车" th:href="${loc == 'cart'} ? '#' : @{/cart}">
+          <i class="fa fa-cart-shopping"></i>
+          <div class="narrow-hide">购物车</div>
+        </a>
+
+        <!-- 订单 -->
+        <a sec:authorize="isAuthenticated()" th:title="订单" th:href="${loc == 'order'} ? '#' : @{/order}">
+          <i class="fa fa-list"></i>
+          <div class="narrow-hide">订单</div>
+        </a>
+        <!-- 管理员菜单 -->
+        <a sec:authorize="hasRole('ROLE_ADMIN')" th:title="管理" th:href="${loc == 'manage'} ? '#' : @{/admin}">
+          <i class="fa fa-lock"></i>
+          <div class="narrow-hide">管理</div>
+        </a>
         <!-- 语言切换 -->
         <a title="更改语言" id="translate">
           <i class="fa fa-language"></i>
           <div class="narrow-hide">语言</div>
         </a>
-        
+
         <!-- 用户信息 -->
         <a th:title="用户信息" th:href="${loc == 'user'} ? '#' : @{/user-center}">
           <i class="fa fa-user"></i>
@@ -65,4 +61,5 @@
     </div>
   </nav>
 </body>
+
 </html>

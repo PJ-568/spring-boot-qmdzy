@@ -15,6 +15,7 @@ body {
   margin: 0;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   min-height: 100vh;
   font-family: 'Exo', sans-serif;
 }
@@ -128,6 +129,7 @@ nav .ul a .current {
 
 /* 脚注 */
 .footer {
+  align-items: center;
   display: flex;
   gap: 1rem;
   width: 100%;
@@ -135,7 +137,6 @@ nav .ul a .current {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   background-color: rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(4px);
-  display: flex;
   justify-content: center;
   padding: 1rem;
   margin-top: auto;
@@ -143,6 +144,7 @@ nav .ul a .current {
 
 /* 主要内容 */
 .container {
+  flex: 1;
   position: relative;
   background-color: rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(4px);
