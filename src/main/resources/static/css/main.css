@@ -8,6 +8,7 @@ body {
 * {
   font-family: Arial, sans-serif;
   color: #FAFAFA;
+  transition: all 0.2s ease;
   text-decoration: none;
 }
 
