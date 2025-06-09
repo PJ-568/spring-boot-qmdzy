@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security6">
-<head th:fragment="head(title='期末大作业商城')">
+<head th:fragment="head(title)">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title th:text="${title} ?: '期末大作业商城'">期末大作业商城</title>
+  <title th:text="${title}">期末大作业商城</title>
   
   <!-- 全局样式 -->
   <link rel="stylesheet" th:href="@{/css/main.css}">
