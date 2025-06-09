@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="~{fragments/head :: head('商品详情')}">
-  <title>商品详情</title>
+<head th:replace="~{fragments/head :: head(${product.name + ' - 商品详情'})}">
 </head>
 
 <body>
