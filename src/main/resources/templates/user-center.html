@@ -12,8 +12,9 @@
   <!-- 主内容区域 -->
   <div class="container max-width">
     <div class="content">
-      <!-- 错误信息提示 -->
-      <div th:if="${errorMessage}" class="error-message" th:text="${errorMessage}"></div>
+      <!-- 消息提示 -->
+      <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
+      <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
       
       <h2>您好，<span th:text="${#authentication.principal.nickname}">用户</span>。</h2>
       
@@ -35,6 +36,38 @@
         </tr>
       </table>
       
+      <!-- 更新昵称表单 -->
+      <div class="form-section">
+        <h3>更新昵称</h3>
+        <form th:action="@{/update-profile}" method="post">
+          <div class="form-group">
+            <label for="nickname">新昵称</label>
+            <input type="text" id="nickname" name="nickname" class="form-control" th:value="${#authentication.principal.nickname}" required>
+          </div>
+          <button type="submit" class="btn btn-primary">更新昵称</button>
+        </form>
+      </div>
+      
+      <!-- 修改密码表单 -->
+      <div class="form-section">
+        <h3>修改密码</h3>
+        <form th:action="@{/change-password}" method="post" id="passwordForm">
+          <div class="form-group">
+            <label for="currentPassword">当前密码</label>
+            <input type="password" id="currentPassword" name="currentPassword" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label for="newPassword">新密码</label>
+            <input type="password" id="newPassword" name="newPassword" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label for="confirmPassword">确认新密码</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" required>
+          </div>
+          <button type="submit" class="btn btn-primary">修改密码</button>
+        </form>
+      </div>
+      
       <!-- 登出按钮 -->
       <form th:action="@{/logout}" method="post">
         <button type="submit" class="btn btn-primary">登出</button>
@@ -44,5 +77,18 @@
   
   <!-- 页脚 -->
   <div th:replace="fragments/footer :: footer"></div>
+  
+  <!-- 前端验证脚本 -->
+  <script>
+    document.getElementById('passwordForm').addEventListener('submit', function(e) {
+      const newPassword = document.getElementById('newPassword').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+      
+      if (newPassword !== confirmPassword) {
+        alert('新密码和确认密码不一致');
+        e.preventDefault();
+      }
+    });
+  </script>
 </body>
 </html>
