@@ -5,8 +5,8 @@ import com.example.qmdzy.qmdzy.service.CartService;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import java.math.BigDecimal;
+import org.springframework.web.bind.annotation.*;
+import java.util.stream.Collectors;
 import java.util.List;
 
 @Controller
@@ -18,16 +18,24 @@ public class CheckoutController {
         this.cartService = cartService;
     }
 
-    @GetMapping("/checkout")
-    public String checkout(Authentication authentication, Model model) {
+    @PostMapping("/checkout")
+    public String checkout(Authentication authentication,
+                         @RequestParam List<Long> cartItemIds,
+                         Model model) {
         Long userId = getCurrentUserId(authentication);
-        List<CartItem> cartItems = cartService.getCartItems(userId);
-        BigDecimal totalAmount = cartItems.stream()
-                .map(CartItem::getTotalPrice)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
         
-        model.addAttribute("cartItems", cartItems);
-        model.addAttribute("totalAmount", totalAmount);
+        List<CartItem> selectedCartItems = cartItemIds.stream()
+            .map(id -> cartService.getCartItemById(id))
+            .collect(Collectors.toList());
+            
+        // 验证购物车项属于当前用户
+        selectedCartItems.forEach(item -> {
+            if(!item.getUser().getId().equals(userId)) {
+                throw new RuntimeException("非法操作：购物车项不属于当前用户");
+            }
+        });
+        
+        model.addAttribute("selectedCartItems", selectedCartItems);
         return "checkout";
     }
 

@@ -278,6 +278,12 @@ nav .ul a .current {
   text-align: center;
 }
 
+.ordersAccordion {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
 /* 登录表单样式 */
 .container h2 {
   margin-bottom: 1rem;

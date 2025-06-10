@@ -12,7 +12,7 @@
       <h1>我的订单</h1>
 
       <div th:if="${#lists.isEmpty(orders)}">
-        <div class="alert alert-info">您还没有任何订单</div>
+        <div class="alert alert-info">您还没有任何订单。</div>
       </div>
 
       <div th:unless="${#lists.isEmpty(orders)}" id="ordersAccordion">

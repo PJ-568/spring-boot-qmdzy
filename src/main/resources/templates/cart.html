@@ -34,6 +34,9 @@
           </thead>
           <tbody>
             <tr th:each="item : ${cartItems}">
+              <td>
+                <input type="checkbox" name="selectedItems" th:value="${item.id}" class="item-checkbox" checked>
+              </td>
               <td th:text="${item.product.name}"></td>
               <td th:text="${#numbers.formatCurrency(item.product.price)}"></td>
               <td>
@@ -67,45 +70,73 @@
               </button>
             </form>
           </h4>
-          <a th:href="@{/checkout}" class="btn btn-success ml-2">
+          <button id="checkoutBtn" class="btn btn-success ml-2">
             <i class="fas fa-shopping-cart"></i> 结算
-          </a>
-        </div>
-      </div>
+          </button>
+          <script>
+            document.getElementById('checkoutBtn').addEventListener('click', function () {
+              const selectedIds = Array.from(document.querySelectorAll('.item-checkbox:checked'))
+                .map(checkbox => checkbox.value);
 
-      <script th:inline="javascript">
-        document.addEventListener('DOMContentLoaded', function () {
-          // 处理加减按钮点击
-          document.querySelectorAll('.minus-btn, .plus-btn').forEach(btn => {
-            btn.addEventListener('click', function () {
-              const form = this.closest('.quantity-form');
-              const input = form.querySelector('.quantity-input');
-              let value = parseInt(input.value);
-              const max = parseInt(input.max);
-              const min = parseInt(input.min);
-
-              if (this.classList.contains('minus-btn')) {
-                value = Math.max(min, value - 1);
-              } else {
-                value = Math.min(max, value + 1);
+              if (selectedIds.length === 0) {
+                alert('请至少选择一件商品');
+                return;
               }
 
-              input.value = value;
+              const form = document.createElement('form');
+              form.method = 'POST';
+              form.action = '/checkout';
+
+              selectedIds.forEach(id => {
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'cartItemIds';
+                input.value = id;
+                form.appendChild(input);
+              });
+
+              const csrf = document.createElement('input');
+              csrf.type = 'hidden';
+              csrf.name = '_csrf';
+              csrf.value = document.querySelector('input[name="_csrf"]').value;
+              form.appendChild(csrf);
+
+              document.body.appendChild(form);
               form.submit();
             });
-          });
 
-          // 初始化时修正数量
-          document.querySelectorAll('.quantity-input').forEach(input => {
-            const value = parseInt(input.value);
-            const max = parseInt(input.max);
-            if (value > max) {
-              input.value = max;
-              input.closest('form').submit();
-            }
-          });
-        });
-      </script>
+            // 初始化时修正数量
+            document.querySelectorAll('.quantity-input').forEach(input => {
+              const value = parseInt(input.value);
+              const max = parseInt(input.max);
+              if (value > max) {
+                input.value = max;
+                input.closest('form').submit();
+              }
+            });
+
+            // 处理加减按钮点击
+            document.querySelectorAll('.minus-btn, .plus-btn').forEach(btn => {
+              btn.addEventListener('click', function () {
+                const form = this.closest('.quantity-form');
+                const input = form.querySelector('.quantity-input');
+                let value = parseInt(input.value);
+                const max = parseInt(input.max);
+                const min = parseInt(input.min);
+
+                if (this.classList.contains('minus-btn')) {
+                  value = Math.max(min, value - 1);
+                } else {
+                  value = Math.min(max, value + 1);
+                }
+
+                input.value = value;
+                form.submit();
+              });
+            });
+          </script>
+        </div>
+      </div>
     </div>
   </div>
 
