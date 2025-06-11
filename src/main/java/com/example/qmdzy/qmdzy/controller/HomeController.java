@@ -63,12 +63,4 @@ public class HomeController {
         
         return "home";
     }
-
-    @GetMapping("/admin")
-    public String admin(Model model) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        model.addAttribute("username", auth.getName());
-        model.addAttribute("roles", auth.getAuthorities());
-        return "admin";
-    }
 }
