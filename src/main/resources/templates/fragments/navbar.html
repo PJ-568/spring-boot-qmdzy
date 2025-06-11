@@ -43,6 +43,10 @@
           <i class="fa fa-gear"></i>
           <div class="narrow-hide">管理</div>
         </a>
+        <a sec:authorize="hasRole('ROLE_ADMIN')" th:title="数据" th:href="${loc == 'manage'} ? '#' : @{/h2-console}">
+          <i class="fa fa-database"></i>
+          <div class="narrow-hide">数据</div>
+        </a>
         <!-- 语言切换 -->
         <a title="更改语言" id="translate">
           <i class="fa fa-language"></i>
