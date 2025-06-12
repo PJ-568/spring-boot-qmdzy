@@ -17,9 +17,10 @@
             <!-- 添加商品表单 -->
             <div class="card mb-4">
                 <div class="card-header">
-                    <h3>添加新商品</h3>
+                    <h3>操作</h3>
                 </div>
-                <div class="card-body">
+                <details class="card-body">
+                    <summary>添加新商品</summary>
                     <form th:action="@{/admin/products}" method="post">
                         <div class="form-group">
                             <label>商品名称</label>
@@ -43,7 +44,7 @@
                         </div>
                         <button type="submit" class="btn btn-primary">添加商品</button>
                     </form>
-                </div>
+                </details>
             </div>
 
             <!-- 商品列表 -->
