@@ -6,7 +6,7 @@ body {
 }
 
 * {
-  font-family: Arial, sans-serif;
+  font-family: 'Maple Mono CN', Arial, sans-serif;
   color: #FAFAFA;
   transition: all 0.2s ease;
   text-decoration: none;
@@ -579,7 +579,7 @@ button:hover.btn-danger {
   border-radius: 8px;
   padding: 20px;
   background: rgba(0, 0, 0, 0.5);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   max-width: 400px;
 }
 

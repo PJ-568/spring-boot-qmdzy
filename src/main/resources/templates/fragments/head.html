@@ -1,26 +1,32 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security6">
+
 <head th:fragment="head(title)">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title th:text="${title}">期末大作业商城</title>
-  
+
   <!-- 全局样式 -->
   <link rel="stylesheet" th:href="@{/css/main.css}">
-  
+
   <!-- 网站图标 -->
   <link rel="icon" type="image/svg+xml" th:href="@{/img/PJ568.jpg}">
-  
+
+  <!-- 等距字体 -->
+  <link rel='stylesheet'
+    href='https://chinese-fonts-cdn.deno.dev/packages/maple-mono-cn/dist/MapleMono-CN-Regular/result.css' />
+
   <!-- Font Awesome 图标库 -->
   <link rel="stylesheet" href="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-y/font-awesome/6.0.0/css/all.min.css">
 
   <!-- PJAX 库 -->
   <script src="https://lib.baomitu.com/pjax/0.2.8/pjax.min.js" type="text/javascript"></script>
-  
+
   <!-- 翻译库 -->
   <script src="https://lib.baomitu.com/translate.js/3.7.2/translate.js" type="text/javascript"></script>
-  
+
   <!-- 主JS文件 -->
   <script th:src="@{/js/main.js}"></script>
 </head>
+
 </html>
